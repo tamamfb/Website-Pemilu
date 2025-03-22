@@ -1,17 +1,12 @@
 <?php
-// Termasuk file koneksi
 include '../database/connect.php'; 
 
-// Inisialisasi pesan kesalahan
 $errorMessage = "";
 
-// Cek apakah form login disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Query untuk mengecek email dan password
     $query = "SELECT * FROM user WHERE U_Email = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param('s', $email);
@@ -19,42 +14,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // Data ditemukan, cek password
         $user = $result->fetch_assoc();
         
-        // Cek apakah password cocok
         if (password_verify($password, $user['U_Password'])) {
-            // Cek U_Status
             if ($user['U_Status'] == 1) {
-                // Status 1, tampilkan pesan bahwa pengguna hanya dapat memilih sekali
                 $errorMessage = "Anda hanya dapat memilih sekali!";
             } else {
-                // Set session untuk email dan role
                 session_start();
                 $_SESSION['email'] = $user['U_Email'];
                 $_SESSION['role'] = $user['U_Role'];
 
-                // Cek role dan arahkan ke halaman yang sesuai
                 if ($user['U_Role'] == 0) {
-                    // Admin, arahkan ke admin.php
                     header("Location: ../admin/admin.php");
                     exit();
                 } elseif ($user['U_Role'] == 1) {
-                    // User, arahkan ke bem.php
                     header("Location: ../user/bem.php");
                     exit();
                 }
             }
         } else {
-            // Password tidak cocok
             $errorMessage = "Email atau Password salah!";
         }
     } else {
-        // Email tidak ditemukan
         $errorMessage = "Email tidak ditemukan!";
     }
 
-    // Tutup koneksi
     $stmt->close();
     $conn->close();
 }
@@ -109,19 +93,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="w-full max-w-md bg-white shadow-lg rounded-lg load">
         
-        <!-- Pesan Terima Kasih -->
         <div id="thankYouMessage" class="thank-you-message hidden">
             Terima kasih telah memilih
         </div>
 
-        <!-- Pesan kesalahan -->
         <?php if ($errorMessage != ""): ?>
         <div class="error-message text-center" id="error-message hidden">
             <?= $errorMessage ?>
         </div>
         <?php endif; ?>
 
-        <!-- Form Login -->
         <div class="p-6">
             <h2 class="text-2xl font-bold mb-6 text-center">LOGIN</h2>
             <form action="login.php" method="POST">
@@ -163,19 +144,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
     <script>
-        // Cek apakah pengguna datang dari 'konfirmasi.php'
         if (document.referrer.includes('konfirmasi.php')) {
             document.getElementById('thankYouMessage').classList.remove('hidden');
         }
 
-        // Cek apakah ada error message yang tersimpan di sessionStorage
         if (sessionStorage.getItem('errorMessage')) {
-            // Tampilkan pesan error jika ada
             const errorMessage = sessionStorage.getItem('errorMessage');
             const errorDiv = document.getElementById('error-message');
             errorDiv.textContent = errorMessage;
             errorDiv.classList.remove('hidden');
-            // Hapus pesan error dari sessionStorage setelah ditampilkan
             sessionStorage.removeItem('errorMessage');
         }
     </script>

@@ -1,9 +1,7 @@
 <?php
 session_start();
 include '../database/connect.php'; 
-// Cek apakah user sudah login dan memiliki role user
 if (!isset($_SESSION['email']) || $_SESSION['role'] != 0) {
-    // Jika tidak login atau bukan user, redirect ke login.php
     header("Location: ../home/login.php");
     exit();
 }
@@ -62,12 +60,10 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 0) {
                 transform: translateX(0px);
             }
         }
-        /* Animasi perubahan angka */
         .count-animate {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
 
-        /* Flexbox di body */
         body {
             display: flex;
             flex-direction: column;
@@ -80,7 +76,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 0) {
     </style>
 </head>
 <body class="flex flex-col min-h-screen bg-gray-100">
-    <!-- navbar -->
     <nav class="flex items-center justify-between p-4 md:p-6 lg:p-8 w-full bg-red-950">
         <div class="flex items-center space-x-4 md:space-x-6 overflow-hidden" style="user-select: none;">
             <img src="../../assets/logo.png" alt="logo" class="h-12 md:h-16 lg:h-20 object-contain" />
@@ -200,7 +195,7 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 0) {
             </div>
         </section>
     </main>
-    <!-- Tombol Logout -->
+
     <div class="w-full flex justify-center my-6">
         <a href="logout.php" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-all">
             Logout
@@ -217,33 +212,28 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 0) {
     <script>
         function updateLiveCount() {
             $.getJSON('live_count_data.php', function(data) {
-                console.log(data); // Debugging untuk memastikan data yang diterima benar
+                console.log(data); 
 
                 let totalVotesBEM = data.votes_bem.reduce((a, b) => a + b, 0);
                 let totalVotesBLM = data.votes_blm.reduce((a, b) => a + b, 0);
                 
-                let totalPemilih = 500; // ganti dengan jumlah pemilih nanti
+                let totalPemilih = 500;
 
-                // Update Progress Bar BEM
                 for (let i = 0; i < 3; i++) {
                     let percentage = totalPemilih > 0 ? (data.votes_bem[i] / totalPemilih) * 100 : 0;
                     $('#vote-' + (i + 1)).text(data.votes_bem[i] + ' Suara');
                     $('#progress-bem-' + (i + 1)).css('width', percentage + '%');
                 }
 
-                // Update Progress Bar BLM
                 ['A', 'B'].forEach((id, i) => {
                     let percentage = totalPemilih > 0 ? (data.votes_blm[i] / totalPemilih) * 100 : 0;
                     $('#vote-' + id).text(data.votes_blm[i] + ' Suara');
                     $('#progress-blm-' + id).css('width', percentage + '%');
                 });
 
-                // Tambahkan informasi total pemilih
                 $('#total-votes').text('Total Pemilih: ' + totalPemilih);
             });
         }
-
-        // Jalankan saat halaman pertama kali dimuat dan update tiap detik
         $(document).ready(function () {
             updateLiveCount();
             setInterval(updateLiveCount, 1000);

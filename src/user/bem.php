@@ -1,11 +1,8 @@
 <?php
-// Termasuk file koneksi
-include '../database/connect.php'; // sesuaikan path sesuai folder tempat koneksi.php berada
+include '../database/connect.php'; 
 session_start();
 
-// Cek apakah user sudah login dan memiliki role user
 if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
-    // Jika tidak login atau bukan user, redirect ke login.php
     header("Location: ../home/login.php");
     exit();
 }
@@ -23,7 +20,7 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
     <title>Calon Ketua-Wakil BEM</title>
     <style>
         .load {
-            animation: appear 1s forwards; /* Panggil animasi saat elemen masuk viewport */
+            animation: appear 1s forwards;
         }
 
         .keren {
@@ -31,12 +28,12 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
         }
 
         .scroll {
-            opacity: 0; /* Pastikan elemen awalnya tidak terlihat */
-            transform: translateX(-100px); /* Posisikan elemen di luar layar */
+            opacity: 0; 
+            transform: translateX(-100px); 
         }
 
         .disappear {
-            animation: disappear 1s forwards; /* Panggil animasi saat elemen keluar viewport */
+            animation: disappear 1s forwards; 
         }
 
         @keyframes transitionIn {
@@ -76,7 +73,7 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             }
             to {
                 opacity: 0;
-                transform: translateX(100px); /* Gerakan saat elemen hilang */
+                transform: translateX(100px); 
             }
         }
     </style>
@@ -153,14 +150,14 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                     class="flex justify-center items-center w-12 h-12 bg-blue-700 text-white rounded-full text-xl font-semibold">
                     1
                 </div>
-                <span class="text-black text-center min-h-[48px] font-bold">Calon Ketua-Wakil BEM</span>
+                <span class="text-black text-center min-h-[48px] font-bold">Ketua-Wakil BEM</span>
             </div>
             <div class="flex flex-col items-center gap-2 w-1/3">
                 <div
                     class="flex justify-center items-center w-12 h-12 bg-gray-300 text-white rounded-full text-xl font-semibold">
                     2
                 </div>
-                <span class="text-gray-400 text-center min-h-[48px]">Calon Ketua BLM</span>
+                <span class="text-gray-400 text-center min-h-[48px]">Ketua BLM</span>
             </div>
             <div class="flex flex-col items-center gap-2 w-1/3">
                 <div
@@ -171,10 +168,8 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             </div>
         </div>
 
-        <!-- paslon 1 -->
         <div class="bg-gray-200 rounded-2xl p-6 w-full max-w-4xl shadow-md scroll">
             <div class="flex flex-col md:flex-row items-center gap-10">
-                <!-- Foto -->
                 <div class="flex flex-col items-center" style="user-select: none;">
                     <img src="../../assets/furina.jpg" alt="Photo"
                         class="w-48 h-48 object-cover rounded-lg shadow-md" />
@@ -185,7 +180,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                 </div>
                 <div class="flex flex-col w-full">
                     <div class="flex flex-col w-full">
-                        <!-- Visi -->
                         <div class="mb-4">
                             <h3 class="text-xl font-bold text-gray-800">VISI</h3>
                             <p class="text-gray-700 mt-2 text-justify">
@@ -193,7 +187,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                                 mahasiswa.
                             </p>
                         </div>
-                        <!-- Misi -->
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">MISI</h3>
                             <ul class="list-disc pl-8 text-gray-700 mt-2 space-y-2 text-justify">
@@ -204,7 +197,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                             </ul>
                         </div>
                     </div>
-                    <!-- Tombol Pilih -->
                     <div class="mt-6">
                         <button
                             style="user-select: none;"
@@ -217,10 +209,8 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             </div>
         </div>
 
-        <!-- paslon 2 -->
         <div class="bg-gray-200 rounded-2xl p-6 w-full max-w-4xl shadow-md mt-10 scroll">
             <div class="flex flex-col md:flex-row items-center gap-10">
-                <!-- Foto -->
                 <div class="flex flex-col items-center" style="user-select: none;">
                     <img src="../../assets/citlali.jpg" alt="Photo"
                         class="w-48 h-48 object-cover rounded-lg shadow-md" />
@@ -231,7 +221,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                 </div>
                 <div class="flex flex-col w-full">
                     <div class="flex flex-col w-full">
-                        <!-- Visi -->
                         <div class="mb-4">
                             <h3 class="text-xl font-bold text-gray-800">VISI</h3>
                             <p class="text-gray-700 mt-2 text-justify">
@@ -239,7 +228,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                                 mahasiswa.
                             </p>
                         </div>
-                        <!-- Misi -->
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">MISI</h3>
                             <ul class="list-disc pl-8 text-gray-700 mt-2 space-y-2 text-justify">
@@ -250,7 +238,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                             </ul>
                         </div>
                     </div>
-                    <!-- Tombol Pilih -->
                     <div class="mt-6">
                         <button
                             style="user-select: none;"
@@ -263,10 +250,8 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             </div>
         </div>
 
-        <!-- paslon 3 -->
         <div class="bg-gray-200 rounded-2xl p-6 w-full max-w-4xl shadow-md mt-10 scroll">
             <div class="flex flex-col md:flex-row items-center gap-10">
-                <!-- Foto -->
                 <div class="flex flex-col items-center" style="user-select: none;">
                     <img src="../../assets/lyney.jpg" alt="Photo"
                         class="w-48 h-48 object-cover rounded-lg shadow-md" />
@@ -277,7 +262,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                 </div>
                 <div class="flex flex-col w-full">
                     <div class="flex flex-col w-full">
-                        <!-- Visi -->
                         <div class="mb-4">
                             <h3 class="text-xl font-bold text-gray-800">VISI</h3>
                             <p class="text-gray-700 mt-2 text-justify">
@@ -285,7 +269,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                                 mahasiswa.
                             </p>
                         </div>
-                        <!-- Misi -->
                         <div>
                             <h3 class="text-xl font-bold text-gray-800">MISI</h3>
                             <ul class="list-disc pl-8 text-gray-700 mt-2 space-y-2 text-justify">
@@ -296,7 +279,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                             </ul>
                         </div>
                     </div>
-                    <!-- Tombol Pilih -->
                     <div class="mt-6">
                         <button
                             style="user-select: none;"
@@ -309,7 +291,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             </div>
         </div>
     </main>
-    <!-- Modal Konfirmasi -->
     <div id="confirmationModal" class="fixed inset-0 hidden items-center justify-center bg-black/30 backdrop-blur-sm z-50">
         <div class="bg-white rounded-lg p-6 w-80 shadow-lg">
             <h3 class="text-xl font-semibold text-gray-800 mb-4">Konfirmasi Pilihan</h3>
@@ -332,49 +313,42 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
     </footer>
 
     <script>
-        // Mendapatkan elemen tombol "Pilih" dan modal
         const buttons = document.querySelectorAll('.pilih-button');
         const modal = document.getElementById('confirmationModal');
         const cancelButton = document.getElementById('cancelButton');
         const confirmButton = document.getElementById('confirmButton');
-        let selectedChoice = 0; // Menyimpan pilihan yang dipilih (1, 2, atau 3)
+        let selectedChoice = 0; 
 
-        // Fungsi untuk menangani pemilihan calon
         function pilihCalon(choice) {
-            selectedChoice = choice; // Menyimpan pilihan yang dipilih
-            modal.classList.remove('hidden'); // Menampilkan modal konfirmasi
-            modal.classList.add('flex'); // Pastikan modal terlihat
+            selectedChoice = choice; 
+            modal.classList.remove('hidden'); 
+            modal.classList.add('flex'); 
         }
 
-        // Tombol "Belum" untuk menutup modal
         cancelButton.addEventListener('click', () => {
-            modal.classList.add('hidden'); // Menyembunyikan modal
+            modal.classList.add('hidden'); 
         });
 
-        // Tombol "Yakin" untuk melanjutkan aksi
         confirmButton.addEventListener('click', () => {
-            localStorage.setItem('bemChoice', selectedChoice); // Simpan nomor pilihan ke localStorage
-            window.location.href = './blm.php'; // Mengarahkan ke halaman baru
+            localStorage.setItem('bemChoice', selectedChoice); 
+            window.location.href = './blm.php'; 
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const elementsToAnimate = document.querySelectorAll('.scroll'); // Semua elemen dengan kelas "scroll"
+            const elementsToAnimate = document.querySelectorAll('.scroll'); 
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Jika elemen terlihat di viewport (40% terlihat), tambahkan kelas animasi masuk
-                        entry.target.classList.remove('disappear'); // Pastikan animasi keluar dihapus
-                        entry.target.classList.add('load'); // Menambahkan animasi masuk
+                        entry.target.classList.remove('disappear'); 
+                        entry.target.classList.add('load'); 
                     } else if (entry.boundingClientRect.top > 0){
-                        // Jika elemen keluar dari viewport (tidak terlihat), tambahkan kelas animasi keluar
-                        entry.target.classList.remove('load'); // Pastikan animasi masuk dihapus
-                        entry.target.classList.add('disappear'); // Menambahkan animasi keluar
+                        entry.target.classList.remove('load'); 
+                        entry.target.classList.add('disappear'); 
                     }
                 });
-            }, { threshold: 0.4 }); // Elemen dianggap terlihat jika 40% dari elemen muncul di layar
+            }, { threshold: 0.4 }); 
 
-            // Mulai mengamati elemen-elemen yang ingin dianimasikan
             elementsToAnimate.forEach(element => {
                 observer.observe(element);
             });

@@ -1,31 +1,23 @@
 <?php
-// Termasuk file koneksi
-include '../database/connect.php'; // Sesuaikan path sesuai lokasi koneksi.php
+include '../database/connect.php'; 
 
-// Inisialisasi pesan kesalahan
 $errorMessage = "";
 
-// Cek apakah form registrasi disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Mengambil data dari form
     $email = $_POST['email'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
-    // Cek apakah password dan konfirmasi password sama
     if ($password !== $confirm_password) {
         $errorMessage = "Password dan konfirmasi password tidak sama!";
     } else {
-        // Hash password sebelum disimpan
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Default nilai lainnya
-        $role = 1; // U_Role = 1
+        $role = 1; 
         $status = null; 
-        $bem = null; // U_BEM dikosongi
-        $blm = null; // U_BLM dikosongi
+        $bem = null; 
+        $blm = null; 
 
-        // Cek jika email sudah terdaftar
         $emailQuery = "SELECT * FROM user WHERE U_Email = ?";
         $stmt = $conn->prepare($emailQuery);
         if ($stmt) {
@@ -34,18 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = $stmt->get_result();
 
             if ($result->num_rows > 0) {
-                // Email sudah terdaftar
                 $errorMessage = "Email sudah terdaftar!";
             } else {
-                // Insert data baru ke dalam database
                 $insertQuery = "INSERT INTO user (U_Email, U_Password, U_Role, U_BEM, U_BLM, U_Status) VALUES (?, ?, ?, ?, ?, ?)";
                 $stmt_insert = $conn->prepare($insertQuery);
                 if ($stmt_insert) {
-                    // Karena U_BEM, U_BLM, dan U_Status adalah NULL, kita gunakan tipe data 's' untuk memungkinkan NULL
                     $stmt_insert->bind_param('ssiiss', $email, $hashedPassword, $role, $bem, $blm, $status);
 
                     if ($stmt_insert->execute()) {
-                        // Registrasi berhasil, redirect ke halaman login
                         header("Location: login.php?register=success");
                         exit();
                     } else {
@@ -64,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    // Tutup koneksi
     $conn->close();
 }
 ?>
@@ -108,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">
     <div class="w-full max-w-md bg-white shadow-lg rounded-lg load">
-        <!-- Pesan kesalahan -->
         <?php if ($errorMessage != ""): ?>
             <div class="error-message text-center" id="error-message hidden">
                 <?= $errorMessage ?>
@@ -117,7 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="bg-white shadow-lg rounded-lg p-6 w-full max-w-md load">
             <h2 class="text-2xl font-bold mb-6 text-center">REGISTER</h2>
-            <!-- Form Registrasi -->
             <form action="register.php" method="POST" id="registerForm">
                 <div class="mb-4 relative">
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-700">
@@ -182,7 +167,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         const passwordWarning = document.getElementById('passwordWarning');
 
         form.addEventListener('submit', function (event) {
-            // Reset pesan error setiap kali submit
             emailWarning.textContent = '';
             emailWarning.classList.add('hidden');
 
@@ -192,7 +176,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const emailValue = emailInput.value.trim();
             const atPos = emailValue.indexOf('@');
 
-            // 4) Pastikan password dan konfirmasi password sama
             const passwordValue = passwordInput.value.trim();
             const confirmValue = confirmInput.value.trim();
             if (passwordValue !== confirmValue) {

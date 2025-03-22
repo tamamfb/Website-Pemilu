@@ -1,11 +1,8 @@
 <?php
-// Termasuk file koneksi
-include '../database/connect.php'; // sesuaikan path sesuai folder tempat koneksi.php berada
+include '../database/connect.php'; 
 session_start();
 
-// Cek apakah user sudah login dan memiliki role user
 if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
-    // Jika tidak login atau bukan user, redirect ke login.php
     header("Location: ../home/login.php");
     exit();
 }
@@ -138,7 +135,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
     </nav>
     <!-- Main Content -->
     <main class="flex-grow flex flex-col items-center mt-12 w-full px-4">
-        <!-- Steps -->
         <div class="flex items-center justify-between gap-8 mb-12 max-w-3xl" style="user-select: none;">
             <div class="flex flex-col items-center gap-2">
                 <div class="flex justify-center items-center w-12 h-12 bg-blue-700 text-white rounded-full text-xl font-semibold">
@@ -160,10 +156,8 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             </div>
         </div>
 
-        <!-- Konfirmasi Pilihan -->
         <h2 class="text-2xl font-bold mb-8 text-gray-800" style="user-select: none;">Konfirmasi Pilihan Anda</h2>
         <div class="w-full max-w-3xl p-6 bg-white rounded-lg shadow-lg">
-            <!-- Pilihan Ketua-Wakil BEM -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold text-gray-800">Pilihan Calon Ketua-Wakil BEM</h3>
                 <div class="flex items-center mt-4">
@@ -172,7 +166,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                 </div>
             </div>
 
-            <!-- Pilihan Ketua BLM -->
             <div>
                 <h3 class="text-xl font-semibold text-gray-800">Pilihan Calon Ketua BLM</h3>
                 <div class="flex items-center mt-4">
@@ -182,13 +175,11 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             </div>
         </div>
 
-        <!-- Checkbox Konfirmasi -->
         <div class="mt-6 flex items-center" style="user-select: none;">
             <input type="checkbox" id="confirmCheckbox" class="w-5 h-5 text-blue-600">
             <label for="confirmCheckbox" class="ml-2 text-gray-700 text-xl">Saya yakin dengan pilihan saya</label>
         </div>
 
-        <!-- Tombol Pilih -->
         <button id="pilihButton" class="mt-4 px-6 py-3 bg-gray-400 text-white font-bold rounded-lg cursor-not-allowed" disabled>
             Pilih
         </button>
@@ -201,36 +192,29 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
         </div>
     </footer>
 
-    <!-- Script -->
     <script>
-        // Cek nilai bemChoice dan blmChoice di localStorage
         const bemChoice = localStorage.getItem('bemChoice');
         const blmChoice = localStorage.getItem('blmChoice');
 
-        // Log nilai untuk memverifikasi
         console.log('bemChoice:', bemChoice);
         console.log('blmChoice:', blmChoice);
 
-        // Definisikan data calon BEM berdasarkan nomor pilihan
         const bemData = {
             1: { name: "Fulan bin Ahmad & Ahmad bin Fulan", photo: "../../assets/furina.jpg" },
             2: { name: "Ali bin Ghufron & Ghufron bin Ali", photo: "../../assets/citlali.jpg" },
             3: { name: "Hasan Rumrowi & Rumrowi Hasan", photo: "../../assets/lyney.jpg" }
         };
 
-        // Definisikan data calon BLM berdasarkan nomor pilihan
         const blmData = {
             1: { name: "Calon BLM 1", photo: "../../assets/kazuha.jpg" },
             2: { name: "Calon BLM 2", photo: "../../assets/nahida.jpg" },
         };
 
-        // Ambil pilihan dari localStorage
         const bemChoiceNumber = parseInt(localStorage.getItem('bemChoice'));
         const blmChoiceNumber = parseInt(localStorage.getItem('blmChoice'));
         const confirmCheckbox = document.getElementById('confirmCheckbox');
         const pilihButton = document.getElementById('pilihButton');
 
-        // Tampilkan data BEM
         if (bemChoiceNumber && bemData[bemChoiceNumber]) {
             document.getElementById('bemNama').textContent = bemData[bemChoiceNumber].name;
             document.getElementById('bemFoto').src = bemData[bemChoiceNumber].photo;
@@ -240,7 +224,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             document.getElementById('bemFoto').classList.add('hidden');
         }
 
-        // Tampilkan data BLM
         if (blmChoiceNumber && blmData[blmChoiceNumber]) {
             document.getElementById('blmNama').textContent = blmData[blmChoiceNumber].name;
             document.getElementById('blmFoto').src = blmData[blmChoiceNumber].photo;
@@ -250,7 +233,6 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             document.getElementById('blmFoto').classList.add('hidden');
         }
 
-        // Event listener untuk checkbox konfirmasi
         confirmCheckbox.addEventListener('change', function () {
             if (this.checked) {
                 pilihButton.disabled = false;
@@ -263,14 +245,11 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
             }
         });
 
-        // Event listener untuk tombol Pilih
         pilihButton.addEventListener('click', function() {
             if (!pilihButton.disabled) {
-                // Ambil nilai bemChoice dan blmChoice dari localStorage
                 const bemChoiceValue = localStorage.getItem('bemChoice');
                 const blmChoiceValue = localStorage.getItem('blmChoice');
 
-                // Kirim permintaan untuk memperbarui status U_Status, U_BEM, dan U_BLM
                 fetch('update_status.php', {
                     method: 'POST',
                     headers: {
@@ -281,7 +260,7 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] != 1) {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        window.location.href = '../home/login.php'; // Redirect jika berhasil
+                        window.location.href = '../home/login.php'; 
                     } else {
                         alert('Gagal memperbarui status');
                     }
